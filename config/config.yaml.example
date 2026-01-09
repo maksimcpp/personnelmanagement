@@ -1,0 +1,10 @@
+app:
+  name: ""
+  secret_key: ""
+
+database:
+  user: ""
+  password: ""
+  host: ""
+  port:
+  name: ""

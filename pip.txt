@@ -1,0 +1,1 @@
+pip3 install 'fastapi[standard]' pydantic-settings 'sqlalchemy[asyncio]' asyncpg 'psycopg[binary]' alembic 'passlib[argon2]' pyyaml 'uvicorn[standard]'
