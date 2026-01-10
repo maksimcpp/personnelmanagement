@@ -30,7 +30,7 @@ async def create_employee(
         first_name=payload.first_name,
         patronymic=payload.patronymic,
         email=payload.email,
-        is_admin=payload.is_admin,
+        is_admin=False,
         password=payload.password
     )
     employee_dto = EmployeeCreateDTO(

@@ -20,10 +20,8 @@ class EmployeeUserCreateSchema(BaseModel):
     last_name: str
     first_name: str
     email: EmailStr
-    is_admin: bool
     password: str
     patronymic: str | None = None
-    team_id: int | None = None
 
 
 class EmployeeTeamSchema(BaseModel):

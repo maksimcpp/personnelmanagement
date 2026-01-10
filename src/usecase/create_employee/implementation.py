@@ -14,7 +14,6 @@ class PostgreSQLCreateEmployeeUseCase(AbstractCreateEmployeeUseCase):
         user_dto: UserCreateDTO    
     ):
         async with self._uow as uow_:
-            user_dto.is_admin = False
             user: UserDTO = await uow_.user_repository.create(user_dto)
             employee_dto.user_id = user.id
             employee: EmployeeDTO = await uow_.employee_repository.create(employee_dto)
