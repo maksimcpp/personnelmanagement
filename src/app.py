@@ -1,6 +1,5 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 from settings import settings
 from infrastructure.databases.postgresql.session_manager import sessionmanager
@@ -19,13 +18,6 @@ async def lifespan(app: FastAPI):
         await sessionmanager.close()
 
 app = FastAPI(lifespan=lifespan)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 app.include_router(api_v1.router)
 
 if __name__ == '__main__':
