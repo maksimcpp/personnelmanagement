@@ -2,17 +2,16 @@ from typing import List
 from fastapi import APIRouter, Depends, Query, status
 from fastapi.responses import JSONResponse
 
-from api.v1.employee.dependencies import create_employee_use_case, get_current_employee_use_case, list_employee_by_status_use_case, list_employee_use_case, set_team_id_use_case, update_employee_status_use_case
+from api.v1.employee.dependencies import create_employee_use_case, get_current_employee_use_case, list_employee_use_case, set_team_id_use_case, update_employee_status_use_case
 from api.v1.employee.models import EmployeeSchema, EmployeeUserCreateSchema, EmployeeUserSchema
 from api.v1.user.dependencies import get_current_user
-from domain.employee.models import EmployeeCreateDTO, EmployeeFilterDTO, EmployeeUserDTO
+from domain.employee.models import EmployeeCreateDTO, EmployeeFilterDTO
 from domain.user.models import UserCreateDTO, UserDTO
 from infrastructure.repositories.postgresql.employee.exceptions import EmployeeNotActive, EmployeeNotExist, InvalidEmployeeId, InvalidTeamId
 from infrastructure.repositories.postgresql.user.exceptions import UserAlreadyExist
 from usecase.create_employee.abstract import AbstractCreateEmployeeUseCase
 from usecase.get_current_employee.abstract import AbstractGetCurrentEmployeeUseCase
 from usecase.list_employees.abstract import AbstractListEmployeesUseCase
-from usecase.list_employees_by_status.abstract import AbstractListEmployeesByStatusUseCase
 from usecase.set_team_to_employee.abstract import AbstractSetTeamIdUseCase
 from usecase.update_employee_status.abstract import AbstractUpdateEmployeeStatusUseCase
 from utils.enums import EmployeeStatus

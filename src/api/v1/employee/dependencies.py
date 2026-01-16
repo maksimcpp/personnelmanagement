@@ -9,8 +9,6 @@ from usecase.get_current_employee.abstract import AbstractGetCurrentEmployeeUseC
 from usecase.get_current_employee.implementation import PostgreSQLGetCurrentEmployeeUseCase
 from usecase.list_employees.abstract import AbstractListEmployeesUseCase
 from usecase.list_employees.implementation import PostgreSQLListEmployeesUseCase
-from usecase.list_employees_by_status.abstract import AbstractListEmployeesByStatusUseCase
-from usecase.list_employees_by_status.implementation import PostgreSQLListEmployeesByStatusUseCase
 from usecase.set_team_to_employee.abstract import AbstractSetTeamIdUseCase
 from usecase.set_team_to_employee.implementation import PostgreSQLSetTeamIdUseCase
 from usecase.update_employee_status.abstract import AbstractUpdateEmployeeStatusUseCase
@@ -34,12 +32,6 @@ def list_employee_use_case(
 ) -> AbstractListEmployeesUseCase:
     uow = PostgreSQLEmployeeUnitOfWork(session)
     return PostgreSQLListEmployeesUseCase(uow)
-
-def list_employee_by_status_use_case(
-    session: AsyncSession = Depends(get_session)
-) -> AbstractListEmployeesByStatusUseCase:
-    uow = PostgreSQLEmployeeUnitOfWork(session)
-    return PostgreSQLListEmployeesByStatusUseCase(uow)
 
 def update_employee_status_use_case(
     session: AsyncSession = Depends(get_session)
