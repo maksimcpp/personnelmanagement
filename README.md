@@ -9,13 +9,33 @@
 - PostgreSQL
 - Alembic
 ## Авторизация и аутентификация
-- Авторизация и аутентификация реализована с использованием rerfresh и access токенов
+- Авторизация и аутентификация реализована с использованием refresh и access токенов
 - access token предназначен для доступа к защищенным ресурсам
-- rerfresh token предназначен для обновления пары rerfresh и access токенов
-- ```POST /api/v1/users``` - регистрация пользователя с автоматическим присвоением ```is_admin = true```
+- refresh token предназначен для обновления пары refresh и access токенов
+- Сущность User выглядит так:
+    ```
+    class User(Base):
+        __tablename__ = "user"
+
+        id: Mapped[int] = mapped_column(primary_key=True)
+        username: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
+        last_name: Mapped[str] = mapped_column(String(100), nullable=False)
+        first_name: Mapped[str] = mapped_column(String(100), nullable=False)
+        patronymic: Mapped[str] = mapped_column(String(100), nullable=True)
+        email: Mapped[str] = mapped_column(nullable=False, unique=True)
+        is_admin: Mapped[bool] = mapped_column(nullable=False, default=False)
+        password: Mapped[str] = mapped_column(String(100), nullable=False)
+
+        tokens: Mapped[List["Token"]] = relationship(
+            back_populates='user',
+            cascade='all, delete, delete-orphan'
+        )
+        employee: Mapped["Employee"] = relationship(back_populates='user')
+    ```
+- ```POST /api/v1/users``` - регистрация пользователя с автоматическим присвоением ```is_admin = True```
 - ```GET /api/v1/users/me``` - получение данных о текущем пользователе
-- ```POST /api/v1/auth/token``` - получение пары rerfresh и access токенов и время их жизни
-- ```POST /api/v1/auth/refresh``` - обновление пары rerfresh и access токенов
+- ```POST /api/v1/auth/token``` - получение пары refresh и access токенов и время их жизни
+- ```POST /api/v1/auth/refresh``` - обновление пары refresh и access токенов
 - ```DELETE /api/v1/auth/logout``` - удаление текущей пары токенов
 - ```POST /api/v1/employees``` - регистрация сотрудника
 - ```GET /api/v1/employees/me``` - получение данных о текущем сотруднике
