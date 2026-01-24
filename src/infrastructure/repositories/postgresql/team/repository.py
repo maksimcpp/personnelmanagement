@@ -1,8 +1,8 @@
-from sqlalchemy import select
+from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
-from domain.team.models import TeamCreateDTO, TeamDTO, TeamRenameDTO
+from domain.team.models import TeamCreateDTO, TeamDTO, TeamFilterDTO
 from domain.team.repository import AbstractTeamRepository
 from infrastructure.databases.postgresql.models.team import Team
 from infrastructure.repositories.postgresql.team.exceptions import InvalidDepartmentId
@@ -30,8 +30,15 @@ class PostgreSQLTeamRepository(AbstractTeamRepository):
             department_id=team.department_id
         )
     
-    async def list(self):
+    async def list(self, filter_dto: TeamFilterDTO):
         query = select(Team)
+        filters = []
+        if filter_dto.department_id is not None:
+            filters.append(Team.department_id == filter_dto.department_id)
+
+        if filters:
+            query = query.filter(and_(*filters))
+
         result = await self._session.execute(query)
         teams = result.scalars().all()
         teams_dto = [

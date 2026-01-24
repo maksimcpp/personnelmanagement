@@ -4,7 +4,7 @@ import secrets
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from domain.token.models import AccessTokenDTO, RefreshTokenDTO, TokenDTO, TokenDeleteDTO
+from domain.token.models import AccessTokenDTO, RefreshTokenDTO, TokenDTO
 from domain.token.repository import AbstractTokenRepository
 from domain.user.models import UserDTO
 from infrastructure.databases.postgresql.models import Token

@@ -24,13 +24,3 @@ class RefreshTokenDTO:
 @dataclass
 class AccessTokenDTO:
     access_token: str
-
-
-@dataclass
-class TokenDeleteDTO:
-    access_token: str
-    refresh_token: str
-    access_token_expires_in: datetime
-    refresh_token_expires_in: datetime
-    created_at: datetime
-    user_id: int

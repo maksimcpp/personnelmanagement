@@ -15,5 +15,5 @@ class TeamCreateDTO:
 
 
 @dataclass
-class TeamRenameDTO:
-    name: str
+class TeamFilterDTO:
+    department_id: int | None = None

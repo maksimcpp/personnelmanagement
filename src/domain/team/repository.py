@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from domain.team.models import TeamCreateDTO, TeamRenameDTO
+from domain.team.models import TeamCreateDTO, TeamFilterDTO
 
 
 class AbstractTeamRepository(ABC):
@@ -9,5 +9,5 @@ class AbstractTeamRepository(ABC):
         raise NotImplementedError()
     
     @abstractmethod
-    async def list(self):
+    async def list(self, filter_dto: TeamFilterDTO):
         raise NotImplementedError()

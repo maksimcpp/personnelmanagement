@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from api.v1.team.dependencies import create_team_use_case, list_team_use_case
 from api.v1.team.models import TeamCreateSchema, TeamSchema
 from api.v1.user.dependencies import get_current_user
-from domain.team.models import TeamCreateDTO
+from domain.team.models import TeamCreateDTO, TeamFilterDTO
 from domain.user.models import UserDTO
 from infrastructure.repositories.postgresql.team.exceptions import InvalidDepartmentId
 from usecase.create_team.abstract import AbstractCreateTeamUseCase
@@ -50,6 +50,7 @@ async def create_team(
 async def list_teams(
     offset: Optional[int] = Query(None, ge=0),
     limit: Optional[int] = Query(None, ge=0, le=100),
+    department_id: Optional[int] = Query(None, ge=0),
     user: UserDTO = Depends(get_current_user),
     use_case: AbstractListTeamUseCase = Depends(list_team_use_case)
 ) -> JSONResponse:
@@ -59,7 +60,14 @@ async def list_teams(
             status_code=status.HTTP_401_UNAUTHORIZED
         )
 
-    teams_dto = await use_case.execute(offset=offset, limit=limit)
+    filter_dto = TeamFilterDTO(
+        department_id=department_id
+    )
+    teams_dto = await use_case.execute(
+        filter_dto=filter_dto,
+        offset=offset,
+        limit=limit
+    )
     schema = [
         TeamSchema(
             id=team.id,

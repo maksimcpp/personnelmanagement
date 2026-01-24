@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from domain.token.models import AccessTokenDTO, RefreshTokenDTO, TokenDeleteDTO
+from domain.token.models import AccessTokenDTO, RefreshTokenDTO
 from domain.user.models import UserDTO
 
 
