@@ -9,5 +9,5 @@ class AbstractDepartmentRepository(ABC):
         raise NotImplementedError()
     
     @abstractmethod
-    async def list(self):
+    async def list_departments(self):
         raise NotImplementedError()

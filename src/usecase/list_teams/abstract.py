@@ -8,7 +8,5 @@ class AbstractListTeamUseCase(ABC):
     async def execute(
         self, 
         filter_dto: TeamFilterDTO,
-        offset: int = 0, 
-        limit: int | None = None
     ):
         raise NotImplementedError()

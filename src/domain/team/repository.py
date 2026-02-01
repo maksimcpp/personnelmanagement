@@ -9,5 +9,8 @@ class AbstractTeamRepository(ABC):
         raise NotImplementedError()
     
     @abstractmethod
-    async def list(self, filter_dto: TeamFilterDTO):
+    async def list_teams(
+        self, 
+        filter_dto: TeamFilterDTO,
+    ):
         raise NotImplementedError()

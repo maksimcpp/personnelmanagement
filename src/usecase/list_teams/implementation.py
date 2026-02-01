@@ -10,13 +10,9 @@ class PostgreSQLListTeamUseCase(AbstractListTeamUseCase):
     async def execute(
         self, 
         filter_dto: TeamFilterDTO,
-        offset: int = 0, 
-        limit: int | None = None
     ):
         async with self._uow as uow_:
-            teams = await uow_.repository.list(filter_dto=filter_dto)
-        
-        if limit is not None:
-            return teams[offset: offset + limit]
-        else:
-            return teams[offset:]
+            teams = await uow_.repository.list_teams(
+                filter_dto=filter_dto,
+            )
+        return teams

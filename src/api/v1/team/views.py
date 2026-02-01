@@ -48,8 +48,6 @@ async def create_team(
 
 @router.get("", response_model=List[TeamSchema])
 async def list_teams(
-    offset: Optional[int] = Query(None, ge=0),
-    limit: Optional[int] = Query(None, ge=0, le=100),
     department_id: Optional[int] = Query(None, ge=0),
     user: UserDTO = Depends(get_current_user),
     use_case: AbstractListTeamUseCase = Depends(list_team_use_case)
@@ -65,8 +63,6 @@ async def list_teams(
     )
     teams_dto = await use_case.execute(
         filter_dto=filter_dto,
-        offset=offset,
-        limit=limit
     )
     schema = [
         TeamSchema(

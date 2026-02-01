@@ -1,3 +1,4 @@
+from typing import Optional
 from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
@@ -30,7 +31,9 @@ class PostgreSQLTeamRepository(AbstractTeamRepository):
             department_id=team.department_id
         )
     
-    async def list(self, filter_dto: TeamFilterDTO):
+    async def list_teams(
+        self, filter_dto: TeamFilterDTO,
+    ):
         query = select(Team)
         filters = []
         if filter_dto.department_id is not None:

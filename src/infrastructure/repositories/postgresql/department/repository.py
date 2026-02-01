@@ -1,3 +1,4 @@
+from typing import Optional
 from sqlalchemy import select
 from domain.department.models import DepartmentCreateDTO, DepartmentDTO
 from domain.department.repository import AbstractDepartmentRepository
@@ -21,8 +22,14 @@ class PostgreSQLDepartmentRepository(AbstractDepartmentRepository):
             name=department.name
         )
     
-    async def list(self):
-        result = await self._session.execute(select(Department))
+    async def list_departments(
+        self, limit: Optional[int] = None, offset: int = 0
+    ):
+        query = select(Department).offset(offset)
+        if limit is not None:
+            query = query.limit(limit)
+
+        result = await self._session.execute(query)
         departments = result.scalars().all()
         departments_dto = [
              DepartmentDTO(
